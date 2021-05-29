@@ -36,6 +36,31 @@ variable "custom_error_response" {
   default     = []
 }
 
+variable "lambda_function_association" {
+  type = list(object({
+    event_type   = string
+    include_body = bool
+    lambda_arn   = string
+  }))
+
+  description = "A config block that triggers a lambda@edge function with specific actions"
+  default     = []
+}
+
+variable "function_association" {
+  type = list(object({
+    event_type   = string
+    function_arn = string
+  }))
+
+  description = <<-EOT
+    A config block that triggers a CloudFront function with specific actions.
+    See the [aws_cloudfront_distribution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#function-association)
+    documentation for more information.
+  EOT
+  default     = []
+}
+
 variable "custom_header" {
   type = list(object({
     name  = string
